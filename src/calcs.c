@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils.c                                     :+:      :+:    :+:   */
+/*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dimendon <dimendon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 21:26:47 by dimendon          #+#    #+#             */
-/*   Updated: 2025/04/03 21:26:48 by dimendon         ###   ########.fr       */
+/*   Created: 2025/04/09 17:55:29 by dimendon          #+#    #+#             */
+/*   Updated: 2025/04/09 19:21:57 by dimendon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "libft/libft.h"
 
-/*
- * ALPHA TO DOUBLE
- * similar to atoi, but dealing with floats
- * takes the cmnd line args and
- * converts to long double (typedef ldbl)
-*/
 double	atodbl(char *s)
 {
 	long	integer_part;
@@ -44,4 +39,44 @@ double	atodbl(char *s)
 		fractional_part = fractional_part + (*s++ - 48) * pow;
 	}
 	return ((integer_part + fractional_part) * sign);
+}
+
+double	map(double unscaled_num, double new_min, double new_max, double old_min)
+{
+	double	old_max;
+
+	old_max = WIDTH;
+	return ((new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min)
+		+ new_min);
+}
+
+t_complex	sum_complex(t_complex z1, t_complex z2)
+{
+	t_complex	result;
+
+	result.x = z1.x + z2.x;
+	result.y = z1.y + z2.y;
+	return (result);
+}
+
+t_complex	square_complex(t_complex z)
+{
+	t_complex	result;
+
+	result.x = (z.x * z.x) - (z.y * z.y);
+	result.y = 2 * z.x * z.y;
+	return (result);
+}
+
+int	julia_track(int x, int y, t_fractal *fractal)
+{
+	if (!ft_strncmp(fractal->name, "julia", 5))
+	{
+		fractal->julia_x = (map(x, -2, +2, 0) * fractal->zoom)
+			+ fractal->shift_x;
+		fractal->julia_y = (map(y, +2, -2, 0) * fractal->zoom)
+			+ fractal->shift_y;
+		fractal_render(fractal);
+	}
+	return (0);
 }

@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I./src/minilibx-linux -I./includes -I./src/libft
-LDFLAGS = -L./src/minilibx-linux -lmlx_Linux -lX11 -lXext -L./src/libft -lft
+LDFLAGS = -L./minilibx-linux -lmlx_Linux -lX11 -lXext -L./src/libft -lft
 
 TARGET = fractol
 
@@ -9,11 +9,9 @@ LIBFT_DIR = src/libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 SRCS =	src/main.c \
-	src/events.c \
-	src/init.c \
-	src/math_utils.c \
-	src/render.c \
-	src/string_utils.c
+	src/calcs.c \
+	src/helper_inits.c \
+	src/render.c
 		
 OBJS = $(SRCS:src/%.c=$(OBJ_PATH)%.o)
 HEADERS = includes/fractol.h
