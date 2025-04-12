@@ -6,14 +6,14 @@
 /*   By: dimendon <dimendon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:29 by dimendon          #+#    #+#             */
-/*   Updated: 2025/04/09 19:21:57 by dimendon         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:42:12 by dimendon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libft/libft.h"
 
-double	atodbl(char *s)
+inline	double	atodbl(char *s)
 {
 	long	integer_part;
 	double	fractional_part;
@@ -41,7 +41,8 @@ double	atodbl(char *s)
 	return ((integer_part + fractional_part) * sign);
 }
 
-double	map(double unscaled_num, double new_min, double new_max, double old_min)
+inline	double	map(double unscaled_num, double new_min, double new_max
+				, double old_min)
 {
 	double	old_max;
 
@@ -50,7 +51,7 @@ double	map(double unscaled_num, double new_min, double new_max, double old_min)
 		+ new_min);
 }
 
-t_complex	sum_complex(t_complex z1, t_complex z2)
+inline	t_complex	sum_complex(t_complex z1, t_complex z2)
 {
 	t_complex	result;
 
@@ -59,7 +60,7 @@ t_complex	sum_complex(t_complex z1, t_complex z2)
 	return (result);
 }
 
-t_complex	square_complex(t_complex z)
+inline	t_complex	square_complex(t_complex z)
 {
 	t_complex	result;
 
@@ -68,7 +69,7 @@ t_complex	square_complex(t_complex z)
 	return (result);
 }
 
-int	julia_track(int x, int y, t_fractal *fractal)
+inline	int	julia_track(int x, int y, t_fractal *fractal)
 {
 	if (!ft_strncmp(fractal->name, "julia", 5))
 	{
@@ -76,7 +77,7 @@ int	julia_track(int x, int y, t_fractal *fractal)
 			+ fractal->shift_x;
 		fractal->julia_y = (map(y, +2, -2, 0) * fractal->zoom)
 			+ fractal->shift_y;
-		fractal_render(fractal);
+		fractal->needs_render = 1;
 	}
 	return (0);
 }

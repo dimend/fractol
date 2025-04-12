@@ -6,12 +6,22 @@
 /*   By: dimendon <dimendon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:34 by dimendon          #+#    #+#             */
-/*   Updated: 2025/04/09 17:55:35 by dimendon         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:43:44 by dimendon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libft/libft.h"
+
+int	render_if_needed(t_fractal *fractal)
+{
+	if (fractal->needs_render)
+	{
+		fractal_render(fractal);
+		fractal->needs_render = 0;
+	}
+	return (0);
+}
 
 int	close_handler(t_fractal *fractal)
 {
@@ -61,15 +71,6 @@ int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 	return (0);
 }
 
-void	data_init(t_fractal *fractal)
-{
-	fractal->escape_value = 4;
-	fractal->iterations_def = 42;
-	fractal->shift_x = 0.0;
-	fractal->shift_y = 0.0;
-	fractal->zoom = 1.0;
-}
-
 void	events_init(t_fractal *fractal)
 {
 	mlx_hook(fractal->mlx_window, KeyPress, KeyPressMask, key_handler, fractal);
@@ -79,4 +80,5 @@ void	events_init(t_fractal *fractal)
 		close_handler, fractal);
 	mlx_hook(fractal->mlx_window, MotionNotify, PointerMotionMask, julia_track,
 		fractal);
+	mlx_loop_hook(fractal->mlx_connection, render_if_needed, fractal);
 }

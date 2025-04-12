@@ -6,7 +6,7 @@
 /*   By: dimendon <dimendon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:15 by dimendon          #+#    #+#             */
-/*   Updated: 2025/04/09 19:15:49 by dimendon         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:44:26 by dimendon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_fractal
 	double	zoom;
 	double	julia_x;
 	double	julia_y;
+	int		needs_render;
 }			t_fractal;
 
 double		atodbl(char *s);
@@ -84,5 +85,7 @@ int			mouse_handler(int button, int x, int y, t_fractal *fractal);
 int			julia_track(int x, int y, t_fractal *fractal);
 void		events_init(t_fractal *fractal);
 void		data_init(t_fractal *fractal);
+void		which_fractal(t_complex *z, t_complex *c, t_fractal *fractal);
+void		put_pixel(int x, int y, t_img *img, int color);
 
 #endif

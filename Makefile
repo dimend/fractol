@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I./src/minilibx-linux -I./includes -I./src/libft
-LDFLAGS = -L./minilibx-linux -lmlx_Linux -lX11 -lXext -L./src/libft -lft
+CFLAGS = -Wall -Wextra -Werror -O3 -flto -march=native -g -I./src/minilibx-linux -I./includes -I./src/libft
+LDFLAGS = -L./minilibx-linux -lmlx_Linux -lX11 -lXext -L./src/libft -lft -O3 -flto -march=native
 
 TARGET = fractol
 

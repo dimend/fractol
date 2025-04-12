@@ -6,14 +6,14 @@
 /*   By: dimendon <dimendon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:43 by dimendon          #+#    #+#             */
-/*   Updated: 2025/04/09 19:20:37 by dimendon         ###   ########.fr       */
+/*   Updated: 2025/04/12 17:43:12 by dimendon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libft/libft.h"
 
-static void	put_pixel(int x, int y, t_img *img, int color)
+inline void	put_pixel(int x, int y, t_img *img, int color)
 {
 	int	offset;
 
@@ -21,7 +21,7 @@ static void	put_pixel(int x, int y, t_img *img, int color)
 	*(unsigned int *)(img->pixels_ptr + offset) = color;
 }
 
-static void	which_fractal(t_complex *z, t_complex *c, t_fractal *fractal)
+inline void	which_fractal(t_complex *z, t_complex *c, t_fractal *fractal)
 {
 	if (!ft_strncmp(fractal->name, "julia", 5))
 	{
@@ -35,7 +35,7 @@ static void	which_fractal(t_complex *z, t_complex *c, t_fractal *fractal)
 	}
 }
 
-static void	handle_pixel(int x, int y, t_fractal *fractal)
+static inline void	handle_pixel(int x, int y, t_fractal *fractal)
 {
 	t_complex	z;
 	t_complex	c;
@@ -60,7 +60,7 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	put_pixel(x, y, &fractal->img, WHITE);
 }
 
-void	fractal_render(t_fractal *fractal)
+inline	void	fractal_render(t_fractal *fractal)
 {
 	int	x;
 	int	y;
@@ -76,4 +76,14 @@ void	fractal_render(t_fractal *fractal)
 	}
 	mlx_put_image_to_window(fractal->mlx_connection, fractal->mlx_window,
 		fractal->img.img_ptr, 0, 0);
+}
+
+void	data_init(t_fractal *fractal)
+{
+	fractal->escape_value = 4;
+	fractal->iterations_def = 42;
+	fractal->shift_x = 0.0;
+	fractal->shift_y = 0.0;
+	fractal->zoom = 1.0;
+	fractal->needs_render = 0;
 }
